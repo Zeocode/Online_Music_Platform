@@ -1,0 +1,132 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ page import="java.sql.*" %>
+<%
+	ResultSet rs = (ResultSet)request.getAttribute("table");
+%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Database</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <style>
+	#aud{
+		position:fixed;
+		bottom:10%;
+		left:38%;
+}
+
+  </style>
+</head>
+<body>
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      
+      <a class="navbar-brand" href="#">HiveMusic</a>
+     
+    </div>
+      <ul class="nav navbar-nav">
+        <li><a href="getmusicUController">Home</a></li>
+        <li><a href="">Wishlist</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="logout.jsp"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+      </ul>
+    </div>
+ 
+</nav>
+ <div class="container">
+  <br>
+  <h2>Enjoy the Musics</h2>
+  <p>Type something in the input field to search the table for songs, categories or language:</p>  
+  <input class="form-control" id="myInput" type="text" placeholder="Search..">
+  <br> 
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Song</th>
+        <th>Category</th>
+        <th>Language</th>
+        <th>Track</th>
+        <th>Wishlist</th>
+        <th>Download</th>
+      </tr>
+    </thead>
+    
+    <tbody id="myTable">
+    <%while(rs.next()) { 
+    %>
+      <tr id="<%=rs.getString("id")%>" class="trowz" data-path="<%=rs.getString("path")%>">
+        <td><%=rs.getString("music_name") %></td>
+        <td><%=rs.getString("category") %></td>
+        <td><%=rs.getString("language") %></td>
+        <td><button  class="btn btn-primary play" >Play</button> </td>
+        <td>
+        	<button  class="btn btn-primary wish" >Add</button> 
+        </td>
+        <td>
+        </td>
+      </tr>
+      <%} %>
+    </tbody>
+  </table>
+  </div>
+  <div id="aud">
+  <audio controls id="contr">
+  			<source id="player" src="" type="audio/mpeg">
+  </audio>
+  </div>
+  <script>
+	$(document).ready(function(){
+  	$("#myInput").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#myTable tr").filter(function() {
+     $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    		});
+  		});
+	});
+
+	$(document).ready(function(){
+	  	$(".wish").click(function() { 
+	  	    if ($(this).text() == "Add") { 
+	  	        $(this).text("Remove"); 
+	  	    } else { 
+	  	        $(this).text("Add"); 
+	  	    }; 
+			
+			});
+	});
+	<!-- });
+	$(document).ready(function(){
+  	$(".wish").click(function() { 
+  	    if ($(this).text() == "Add") { 
+  	        $(this).text("Remove"); 
+  	    } else { 
+  	        $(this).text("Add"); 
+  	    }; 
+		
+	  	  });-->
+  	<!--$('.icon-wishlist').on('click', function(){
+  	  $(this).toggleClass('in-wishlist');
+  	});-->
+
+	$(document).ready(function(){ 	
+  	$(".play").on('click',function(){
+		
+		$("#player").attr("src","waka.mp3");
+		$("#contr").click();
+		});
+	});
+	</script>
+</body>
+</html>

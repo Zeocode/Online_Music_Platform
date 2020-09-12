@@ -1,0 +1,8 @@
+INDEX VERSION 1.4+/media/dutta/78FC9D1FFC9CD928/Web Development/Java Web Development/Workspace/.metadata/.plugins/org.eclipse.wst.jsdt.core/indexes
+837886793.index
+3813963771.index
+144317445.index
+3590877041.index
+4162347812.index
+2432646834.index
+699520136.index
